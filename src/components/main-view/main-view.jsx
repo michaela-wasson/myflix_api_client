@@ -38,7 +38,7 @@ export const MainView = () => {
     );
   }
 
-  if (movie.length === 0) {
+  if (movies.length === 0) {
     return <div>Nothing here!</div>;
   }
 
