@@ -27249,45 +27249,51 @@ var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
     const [movies, setMovies] = (0, _react.useState)([]);
+    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/movies").then((response)=>response.json()).then((data)=>{
-            const moviesFromApi = data.map((movie)=>{
+            console.log(data);
+            const moviesFromAPI = data.map((movie)=>{
                 return {
                     _id: movie._id,
+                    ImageUrl: movie.imageUrl,
                     Title: movie.title,
                     Description: movie.description,
-                    ImagePath: movie.imagePath,
-                    Genre: {
-                        //Name: movie.genre.Name,
-                        Description: movie.genre.Description
-                    },
-                    Director: {
-                        Name: movie.director.Name,
-                        Bio: movie.director.Bio,
-                        Birth: movie.director.Birth,
-                        Death: movie.director.Death
-                    },
+                    Genre: [
+                        {
+                            name: movie.genre.name,
+                            description: movie.genre.subgenre
+                        }
+                    ],
+                    Director: [
+                        {
+                            name: movie.director.Name,
+                            bio: movie.director.Bio,
+                            Birth: movie.director.Birth,
+                            Death: movie.director.Death
+                        }
+                    ],
                     Featured: movie.featured
                 };
             });
-            setMovies(moviesFromApi);
+            if (moviesFromAPI.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "main-view",
+                children: "The list is empty!"
+            }, void 0, false, {
+                fileName: "src/components/main-view/main-view.jsx",
+                lineNumber: 37,
+                columnNumber: 26
+            }, undefined);
+            setMovies(moviesFromAPI);
         });
     }, []);
-    const [selectedMovie, setSelectedMovie] = (0, _react.useState)(null);
     if (selectedMovie) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieView.MovieView), {
         movie: selectedMovie,
         onBackClick: ()=>setSelectedMovie(null)
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 42,
-        columnNumber: 7
-    }, undefined);
-    if (movies.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: "Nothing here!"
-    }, void 0, false, {
-        fileName: "src/components/main-view/main-view.jsx",
         lineNumber: 47,
-        columnNumber: 12
+        columnNumber: 7
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: movies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCard.MovieCard), {
@@ -27297,16 +27303,16 @@ const MainView = ()=>{
                 }
             }, movie.id, false, {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 53,
+                lineNumber: 54,
                 columnNumber: 9
             }, undefined))
     }, void 0, false, {
         fileName: "src/components/main-view/main-view.jsx",
-        lineNumber: 51,
+        lineNumber: 52,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "llzgrUkvR/+OoCNfiqlA1H2LLFI=");
+_s(MainView, "PO+XgOji7E32nFJj3H5UPLPJ7w4=");
 _c = MainView;
 var _c;
 $RefreshReg$(_c, "MainView");
