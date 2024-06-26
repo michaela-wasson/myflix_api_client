@@ -21,12 +21,12 @@ export const MainView = () => {
                       Title: movie.title,
                       Description: movie.description,
                       Genre: {
-                          name: movie.genre.name,
-                          description: movie.genre.subgenre
+                          Name: movie.genre.name,
+                          Description: movie.genre.description
                       },
                       Director: {
-                          name: movie.director.Name,
-                          bio: movie.director.Bio,
+                          Name: movie.director.Name,
+                          Bio: movie.director.Bio,
                           Birth: movie.director.Birth,
                           Death: movie.director.Death
                       },

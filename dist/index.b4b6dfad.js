@@ -27260,12 +27260,12 @@ const MainView = ()=>{
                     Title: movie.title,
                     Description: movie.description,
                     Genre: {
-                        name: movie.genre.name,
-                        description: movie.genre.subgenre
+                        Name: movie.genre.name,
+                        Description: movie.genre.description
                     },
                     Director: {
-                        name: movie.director.Name,
-                        bio: movie.director.Bio,
+                        Name: movie.director.Name,
+                        Bio: movie.director.Bio,
                         Birth: movie.director.Birth,
                         Death: movie.director.Death
                     },
@@ -27345,13 +27345,8 @@ const MovieCard = ({ movie, onMovieClick })=>{
 };
 _c = MovieCard;
 MovieCard.propTypes = {
-    movie: PropType.shape({
-        title: PropType.string.isRequired,
-        Description: (0, _propTypesDefault.default).string.isRequired,
-        Genre: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).object),
-        Director: (0, _propTypesDefault.default).arrayOf((0, _propTypesDefault.default).object),
-        imageUrl: PropType.string.isRequired,
-        Featured: (0, _propTypesDefault.default).bool
+    movie: (0, _propTypesDefault.default).shape({
+        title: (0, _propTypesDefault.default).string
     }).isRequired,
     onMovieClick: (0, _propTypesDefault.default).func.isRequired
 };
