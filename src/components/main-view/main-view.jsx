@@ -20,16 +20,16 @@ export const MainView = () => {
                       ImageUrl: movie.imageUrl,
                       Title: movie.title,
                       Description: movie.description,
-                      Genre: [{
+                      Genre: {
                           name: movie.genre.name,
                           description: movie.genre.subgenre
-                      }],
-                      Director: [{
+                      },
+                      Director: {
                           name: movie.director.Name,
                           bio: movie.director.Bio,
                           Birth: movie.director.Birth,
                           Death: movie.director.Death
-                      }],
+                      },
                       Featured: movie.featured
                   }
               });
