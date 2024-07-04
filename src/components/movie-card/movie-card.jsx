@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
 
 export const MovieCard = ({ movie, onMovieClick }) => {
-    return (
-      <div
-        onClick={() => {
-          onMovieClick(movie);
-        }}
-      >
-        {movie.title}
+  return (
+    <div
+      onClick={() => {
+        onMovieClick(movie);
+      }}
+    >
+      {movie.title}
+      <div>
+        <img src={movie.imagePath} width={100} />
       </div>
-    );
-  };
+    </div>
+  );
+};
 
 
   MovieCard.propTypes = {
