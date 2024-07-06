@@ -62,15 +62,6 @@ export const SignupView = () => {
           required
         />
       </label>
-      <label>
-        Birthday:
-        <input
-          type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-          required
-        />
-      </label>
       <button type="submit">Submit</button>
     </form>
   );

@@ -6,7 +6,7 @@ export const LoginView = ({onLoggedIn}) => {
     const [password, setPassword] = useState("");
 
     const handleSubmit = (event) => {
-        eventpreventDefault();
+        event.preventDefault();
 
         const data = {
             access: username, 
@@ -19,7 +19,8 @@ export const LoginView = ({onLoggedIn}) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
-        }).then((response) => {
+        })
+        .then((response) => {
             if(response.ok) {
                 onLoggedIn(username);
     
@@ -32,6 +33,7 @@ export const LoginView = ({onLoggedIn}) => {
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
             onLoggedIn(data.user, data.token);
+            
           } else {
             alert("No such user");
           }
@@ -44,13 +46,14 @@ export const LoginView = ({onLoggedIn}) => {
       <form onSubmit= {handleSubmit}>
         <label>
           Username:
-          <input type="text" 
+          <input type="text"
           value={username} 
-          onchange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           required
           />
 
         </label>
+
         <label>
           Password:
           <input type="password"
@@ -58,6 +61,6 @@ export const LoginView = ({onLoggedIn}) => {
           onChange={(e) => setPassword(e.target.value)}
           required/>
         </label>
-        <button type="submit">Submit</button>
+        <button type="submit" >Submit</button>
       </form>
     )};

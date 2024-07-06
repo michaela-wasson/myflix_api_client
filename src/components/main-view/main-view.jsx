@@ -18,10 +18,17 @@ export const MainView = () => {
 
 
   useEffect(() => {
-    if(!token) return;
+    if(!token) {
+      return;
+    }
+      
 
     fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/movies",{
-      headers: {Authorization: 'Bearer {${token}'},
+      //method:"GET",
+      headers: {
+        Authorization: 'Bearer ${token}'
+      },
+      //body: JSON.stringify(data),
     })
         .then((response) => response.json())
         .then((data) => {
