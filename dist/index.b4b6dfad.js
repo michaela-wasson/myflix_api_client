@@ -28481,14 +28481,15 @@ const LoginView = ({ onLoggedIn })=>{
             },
             body: JSON.stringify(data)
         }).then((response)=>{
-            if (response.ok) onLoggedIn(username);
-            else alert("Can't login");
-        });
-        if (data.user) {
+            if (response.ok) return response.json();
+            else throw new Error("Can't login");
+        }).then((data)=>{
             localStorage.setItem("user", JSON.stringify(data.user));
             localStorage.setItem("token", data.token);
             onLoggedIn(data.user, data.token);
-        } else alert("No such user");
+        }).catch((error)=>{
+            alert(error.message);
+        });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
         onSubmit: handleSubmit,
