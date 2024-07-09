@@ -1,4 +1,7 @@
-import{useState} from "react";
+import React from "react";
+import {useState} from "react";
+import Button from "react-bootstrap/Button"; 
+import Form from 'react-bootstrap/Form';
 
 export const SignupView = () => {
     const [username, setUsername] = useState("");
@@ -32,8 +35,47 @@ export const SignupView = () => {
     });
     };
   
-    return (
-      <form onSubmit={handleSubmit}>
+    return ( 
+
+        <Form onSubmit= {handleSubmit}>
+        <Form.Group controlId="formUsername">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+            type= "text"
+            value={username}
+            onChange= {(e) => setUsername(e.target.value)}
+            required
+            />
+        </Form.Group>
+
+        <Form.Group controlId= "formPassword">
+            <Form.label>Password:</Form.label>
+            <Form.Control 
+            type= "password"
+            value= {password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            />
+        </Form.Group>
+
+        <Form.Group controlId = "formEmail">
+            <Form.label>Email:</Form.label>
+            <Form.Control
+            type = "email"
+            value = {email}
+            onChange ={(e) => setEmail(e.target.value)}
+            required
+            />
+        </Form.Group>
+
+        <Button variant= "primary" type="submit">
+            Submit
+        </Button>
+    </Form>
+
+
+
+      /*<form onSubmit={handleSubmit}>
         <label>
         Username:
         <input
@@ -63,6 +105,7 @@ export const SignupView = () => {
         />
       </label>
       <button type="submit">Submit</button>
-    </form>
-  );
-};
+    </form>*/
+  )};
+
+
