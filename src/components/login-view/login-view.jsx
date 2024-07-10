@@ -1,7 +1,7 @@
 import React from "react";
 import {useState} from "react";
 import Button from "react-bootstrap/Button"; 
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 
 
 export const LoginView = ({onLoggedIn}) => {
@@ -36,9 +36,9 @@ export const LoginView = ({onLoggedIn}) => {
             localStorage.setItem("token", data.token);
             onLoggedIn(data.user, data.token);
         })
-        .catch((error) => {
+        /*.catch((error) => {
             alert(error.message);
-        })
+        })*/
 
     };
 
