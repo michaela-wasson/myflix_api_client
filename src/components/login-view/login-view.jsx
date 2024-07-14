@@ -12,8 +12,8 @@ export const LoginView = ({onLoggedIn}) => {
         event.preventDefault();
 
         const data = {
-            access: username, 
-            secret: password
+            Username: username, 
+            Password: password
         }; 
 
         fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/login", {
@@ -36,14 +36,9 @@ export const LoginView = ({onLoggedIn}) => {
             localStorage.setItem("token", data.token);
             onLoggedIn(data.user, data.token);
         })
-        /*.catch((error) => {
-            alert(error.message);
-        })*/
+
 
     };
-
-
-
 
     return (
       <Form onSubmit= {handleSubmit}>
@@ -58,7 +53,7 @@ export const LoginView = ({onLoggedIn}) => {
         </Form.Group>
 
         <Form.Group controlId= "formPassword">
-            <Form.label>Password:</Form.label>
+            <Form.Label>Password:</Form.Label>
             <Form.Control 
             type= "password"
             value= {password}
@@ -71,26 +66,5 @@ export const LoginView = ({onLoggedIn}) => {
             Submit
         </Button>
     </Form>
-        
-
-    
-       /*<label>
-          Username:
-          <input type="text"
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          />
-
-        </label>
-
-        <label>
-          Password:
-          <input type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required/>
-        </label>
-        <button type="submit" >Submit</button>
-      </form>*/
-    )};
+    )
+};

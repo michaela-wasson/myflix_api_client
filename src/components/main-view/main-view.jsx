@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
+import {ProfileView} from "../profile-view/profile-view";
 import {LoginView} from "../login-view/login-view";
 import {SignupView} from "../signup-view/signup-view";
+import {NavBar} from "../navigation-bar/navigation-bar"
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+//import { RouteContext } from "react-router/lib/context";
 
 export const MainView = () => {
 
@@ -24,87 +30,142 @@ export const MainView = () => {
       
 
     fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/movies",{
-      //method:"GET",
+      
       headers: {
-        Authorization: 'Bearer ${token}'
+        Authorization: `Bearer ${token}`
       },
-      //body: JSON.stringify(data),
+      
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
+            //console.log(data);
             const moviesFromAPI = data.map(movie => {
-
-              const genre = movie.genre ? {
-                Description: movie.genre.description,
-                Name: movie.genre.name
-            } : { Description: "", Name: "" }; 
-
-                const director = movie.director ? {
-                    Name: movie.director.Name,
-                    Bio: movie.director.Bio,
-                    Birth: movie.director.Birth,
-                    Death: movie.director.Death
-                } : { Name: "", Bio: "", Birth: "", Death: "" }; 
 
                 return {
                     _id: movie._id,
-                    ImageUrl: movie.imageUrl,
-                    Title: movie.title,
-                    Description: movie.description,
-                    Genre: genre,
-                    Director: director,
-                    Featured: movie.featured
+                    ImagePath: movie.ImagePath,
+                    Title: movie.Title,
+                    Description: movie.Description,
+                    Director: {
+                      Name: movie.Director.Name,
+                      Bio: movie.Director.Bio,
+                      Birth: movie.Director.Birth,
+                      Death: movie.Director.Death,
+                    },
+                    Genre: {
+                      Name: movie.Genre.Name,
+                      Description: movie.Genre.Description,
+                    },
+                    Featured: movie.Featured
                 }
             });
-
+            //console.log("moviesfromAPI" , moviesFromAPI)
             setMovies(moviesFromAPI);
+            //console.log("movies", movies)
 
         });
 
   }, [token]);
 
 
-  if (!user) {
-    return (
-      <>
-        <LoginView onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }} />
-        or
-        <SignupView />
-      </>
-    );
-  }
-  
-
-  if (selectedMovie) {
-    return (
-      <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-    );
-  }
-  
-  if (moviesFromAPI.length === 0) {
-    return <div className="main-view">The list is empty!</div>;
-}
-
-
-
-
   return (
-    <div>
-      {movies.map((movie) => (
-        <MovieCard
-          key={movie.id}
-          movie={movie}
-          onMovieClick={(newSelectedMovie) => {
-            setSelectedMovie(newSelectedMovie);
-          }}
+    <BrowserRouter>
+    <NavBar user={storedUser} onLoggedOut={() => { setUser(null); setToken(null); localStorage.clear; }} />
+    <Row className="justify-content-md-center">
+      <Routes>
+        <Route
+        path= "/signup"
+        element={
+          <>
+          {user ? (
+            <Navigate to = "/" />
+          ): (
+            <Col md={5}>
+              <SignupView/>
+            </Col>
+          )}
+          </>
+        }
         />
-      ))}
-    </div>
-  );
 
-  <button onClick={() => { setUser(null); setToken(null); localStorage.clear; }}>Logout</button>
+        <Route 
+        path= "/login"
+        element= {
+          <>
+            {user ? (
+              <Navigate to= "/"/>
+            ): (
+              <Col md={5}>
+                <LoginView onLoggedIn= {(user) => setUser(user)}/>
+              </Col>
+            )}
+          </>
+
+        }
+        />
+
+        <Route 
+        path= "/movies/:movieId"
+        element={
+          <>
+          { ! user ? (
+            <Navigate to ="/login" replace />
+          ) : movies.length === 0 ? (
+            <Col> There are no movies! </Col>
+          ) : (
+            <Col md={8} >
+              <MovieView movies={movies} />
+            </Col>
+          )}
+          </>
+        }
+        />
+
+        <Route 
+        path= "/users"
+        element= {
+          <>
+            {! user ? (
+              <Navigate to= "/login" replace/>
+            ): (
+              <Col md={2}>
+                <ProfileView onLoggedIn= {(user) => setUser(user)}/>
+              </Col>
+            )}
+          </>
+
+        }
+        />
+
+        <Route 
+        path = "/"
+        element = {
+          <>
+            {! user ? (
+              <Navigate to="/login" replace/>
+            ): movies.length === 0? (
+              <Col> There are no movies!</Col>
+            ) : (
+              <>
+                {movies.map ((movie) => (
+                  <Col className= "mb-4" 
+                  key= {movie._id} 
+                  md={3}> 
+                  <MovieCard movie={movie}/>
+                  </Col>
+                ))}
+                </>
+              )}
+            </>
+}
+/>
+</Routes>
+
+</Row>
+    </BrowserRouter>
+  );
 };
+
+
+
+ 
