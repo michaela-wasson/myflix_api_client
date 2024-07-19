@@ -2,21 +2,41 @@ import { useState } from "react";
 import { Button, Card, Form, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
-import {ProfileEdit} from "/profile-edit-view";
+import {ProfileEdit} from "./profile-edit-view";
 
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
-    let favMovies = movies.filter(m => user.FavoriteMovies.includes(m._id))
-    // const favMovies = [];
-    // for (let i = 0; i < movies.length; i++) {
-    //     if (user.favoriteMovies.includes(movies[i]._id)){
-    //         favMovies.push(movies[i])
-    //         console.log(favMovies)
-    //     }
-    // } //movies.filter((movie) => user.favoriteMovies.includes(movie._id));
+    const token = JSON.parse(localStorage.getItem('token')); 
+    const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
 
-    return ( //user info 
+    const deleteProfile = async (user) => {
+        await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
+            method: "DELETE",
+            
+            headers: {
+              "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+            }, 
+
+          }).then((response) => {
+            if (response.ok) {
+              alert("This button will delete your info!");
+              localStorage.removeItem("user");
+              localStorage.removeItem("token");
+              window.location.reload();
+            } else {
+              alert("Try again");
+            }
+          }); 
+          deleteProfile();
+          };
+
+         
+    
+   
+
+    return ( 
         <Form>
 
         
@@ -24,6 +44,7 @@ export const ProfileView = ( { movies} )=> {
             <ListGroup>
                 <ListGroup.Item>Your Username: {user.Username}</ListGroup.Item>
                 <ListGroup.Item>Your Email: {user.Email}</ListGroup.Item>
+                <ListGroup.Item>Your Birthday: {user.Birthday}</ListGroup.Item>
                 <ListGroup.Item>
                     <strong> Your Favorites!</strong>
                     {favMovies.length > 0 ? (
@@ -42,7 +63,7 @@ export const ProfileView = ( { movies} )=> {
                 </ListGroup.Item> 
             
             <ListGroup.Item>
-            <Link to={`/users/${encodeURIComponent(user.Username)}`}>
+            <Link to = "ProfileEdit" >
                 <Button
                   type="button"
                 >
@@ -52,13 +73,14 @@ export const ProfileView = ( { movies} )=> {
             </ListGroup.Item>
 
             <ListGroup.Item>
-            <Link to={`/users/${encodeURIComponent(user.Username)}`}>
+            
                 <Button
                   type="button"
+                  onClick= {deleteProfile}
                 >
                   Delete Profile
                 </Button>
-              </Link>
+              
             </ListGroup.Item>
 
             </ListGroup>
@@ -67,26 +89,6 @@ export const ProfileView = ( { movies} )=> {
 
     );
 
-    //form and button to update info 
-
-
-    //button to delete user
-
-    // fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/users", {
-    //     method: "GET",
-    //     body: JSON.stringify(data),
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     }
-    //   }).then((response) => {
-    //     if (response.ok) {
-
-
-    //     } else {
-    //       alert("Signup failed");
-    //     }
-    //   });
-    //   };
 
 
 };

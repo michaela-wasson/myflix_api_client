@@ -5,14 +5,26 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
-  console.log("movies", movies)
+  const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id));
+  const user = JSON.parse(localStorage.getItem('user')); 
   
   const { movieId } = useParams();
   console.log("movieId", movieId)
 
   const movie = movies.find((mov) => mov._id === movieId);
 
+  const favorite = (movie) => { 
+    const newFavmovies= [...favMovies, movie];
+    favMovies = newFavMovies;
 
+  };
+
+  
+  const deleteFavorite = (movie) => {
+    favMovies.remove(movie);
+    alert("${movie} deleted.")
+    
+  }
 
 
     return (
@@ -48,6 +60,15 @@ export const MovieView = ({ movies }) => {
         <Link to={`/`}>
         <button className="back-button">Back</button>
         </Link>
+
+        
+        <button onClick= {favorite}>Add to Favorites</button>
+        
+
+        
+        <button onClick= {deleteFavorite}>Delete from Favorites</button>
+        
+
         </Col>
 </Row>
       

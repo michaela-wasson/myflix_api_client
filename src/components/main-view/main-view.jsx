@@ -4,6 +4,7 @@ import { MovieView } from "../movie-view/movie-view";
 import {ProfileView} from "../profile-view/profile-view";
 import {LoginView} from "../login-view/login-view";
 import {SignupView} from "../signup-view/signup-view";
+import {ProfileEdit} from "../profile-view/profile-edit-view";
 import {NavBar} from "../navigation-bar/navigation-bar"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -130,6 +131,22 @@ export const MainView = () => {
             ): (
               <Col md={2}>
                 <ProfileView onLoggedIn= {(user) => setUser(user)}/>
+              </Col>
+            )}
+          </>
+
+        }
+        />
+
+        <Route 
+        path= "/users/ProfileEdit"
+        element= {
+          <>
+            {! user ? (
+              <Navigate to= "/login" replace/>
+            ): (
+              <Col md={2}>
+                <ProfileEdit onLoggedIn= {(user) => setUser(user)}/>
               </Col>
             )}
           </>
