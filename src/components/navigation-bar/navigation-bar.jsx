@@ -12,15 +12,25 @@ export const NavBar = ({ user, onLoggedOut }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
           {user ? (
-            
-            <>
-                <Link as={Link} to="/users">Profile</Link>
-                <Link onClick={onLoggedOut} >Logout</Link>  
+
+            <>  <Nav.Item>
+                    <Nav.Link as={Link} to="/users">Profile</Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Nav.Link onClick={onLoggedOut} >Logout</Nav.Link> 
+                </Nav.Item>
+                
+                 
             </>
           ) : (
-            <>
-                <Link as={Link} to="/login">Login</Link>
-                <Link as={Link} to="/signup">Signup</Link>
+            <>  <Nav.Item>
+                    <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                 </Nav.Item>
+                 <Nav.Item>
+                    <Nav.Link as={Link} to="/signup">Signup</Nav.Link>
+                 </Nav.Item>
+                
+                
             </>
         )}
           

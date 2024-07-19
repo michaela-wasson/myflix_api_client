@@ -99,7 +99,7 @@ export const ProfileEdit = () => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                         type="password"
-                        value={user.Password}
+                        value=""
                         onChange={(e) => setPassword({ ...user, Password: e.target.value })}
                     />
                 </Form.Group>
