@@ -7,7 +7,7 @@ import {ProfileEdit} from "./profile-edit-view";
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
-    const token = JSON.parse(localStorage.getItem('token')); 
+    const token = JSON.stringify(localStorage.getItem('token')); 
     const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
 
     const deleteProfile = async (user) => {

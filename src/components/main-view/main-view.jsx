@@ -114,7 +114,7 @@ export const MainView = () => {
           ) : movies.length === 0 ? (
             <Col> There are no movies! </Col>
           ) : (
-            <Col md={8} >
+            <Col md={9} >
               <MovieView movies={movies} />
             </Col>
           )}
@@ -129,8 +129,10 @@ export const MainView = () => {
             {! user ? (
               <Navigate to= "/login" replace/>
             ): (
-              <Col md={2}>
-                <ProfileView onLoggedIn= {(user) => setUser(user)}/>
+              <Col md={5}>
+                <ProfileView 
+                movies={movies}
+                onLoggedIn= {(user) => setUser(user)}/>
               </Col>
             )}
           </>
@@ -145,7 +147,7 @@ export const MainView = () => {
             {! user ? (
               <Navigate to= "/login" replace/>
             ): (
-              <Col md={2}>
+              <Col md={5}>
                 <ProfileEdit onLoggedIn= {(user) => setUser(user)}/>
               </Col>
             )}

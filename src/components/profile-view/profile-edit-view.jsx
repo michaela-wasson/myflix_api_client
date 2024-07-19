@@ -70,9 +70,11 @@ export const ProfileEdit = () => {
             <ListGroup>
                 <ListGroup.Item>Username: {user.Username}</ListGroup.Item>
                 <ListGroup.Item>Email: {user.Email}</ListGroup.Item>
-                <ListGroup.Item>Password: {user.Password}</ListGroup.Item>
+                
                 <ListGroup.Item>Birthday: {user.Birthday}</ListGroup.Item>
             </ListGroup>
+
+            <h2>Edit Profile</h2>
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formUsername">

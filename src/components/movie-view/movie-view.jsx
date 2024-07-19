@@ -5,17 +5,20 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
-  const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id));
   const user = JSON.parse(localStorage.getItem('user')); 
-  
   const { movieId } = useParams();
   console.log("movieId", movieId)
-
   const movie = movies.find((mov) => mov._id === movieId);
+  const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id));
+  
+  
+
 
   const favorite = (movie) => { 
-    const newFavmovies= [...favMovies, movie];
-    favMovies = newFavMovies;
+    //const newFavmovies= [...favMovies, movie];
+    //favMovies = newFavMovies;
+    favMovies.push(movie);
+    alert("Movie added")
 
   };
 
