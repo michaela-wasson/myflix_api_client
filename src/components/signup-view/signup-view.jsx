@@ -36,10 +36,12 @@ export const SignupView = () => {
     };
   
     return ( 
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}
+        >
         <Form.Group controlId="formUsername">
             <Form.Label>Username:</Form.Label>
             <Form.Control
+            //class= "formstyling"
             type= "text"
             value={username}
             onChange= {(e) => setUsername(e.target.value)}

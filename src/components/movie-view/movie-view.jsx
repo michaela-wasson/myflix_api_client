@@ -115,24 +115,24 @@ export const MovieView = ({ movies }) => {
         </Col>
         
         <Col>
-        <div>
-          <span>Title: </span>
+        <div class = "movie-card-element">
+          <span><strong>Title:</strong> </span>
           <span>{movie.Title}</span>
         </div>
-        <div>
-          <span>Description: </span>
+        <div class = "movie-card-element">
+          <span><strong>Description:</strong> </span>
           <span>{movie.Description}</span>
         </div>
-        <div>
-        <span>Genre: </span>
+        <div class = "movie-card-element">
+        <span><strong>Genre:</strong> </span>
           <span>{movie.Genre.Name}</span>
         </div>
-        <div>
-          <span>Genre Explained: </span>
+        <div class = "movie-card-element">
+          <span><strong>Genre Described: </strong></span>
           <span>{movie.Genre.Description}</span>
         </div>
-        <div>
-          <span>Director: </span>
+        <div class = "movie-card-element">
+          <span><strong>Director:</strong> </span>
           <span>{movie.Director.Bio}</span>
         </div>
 
@@ -142,7 +142,7 @@ export const MovieView = ({ movies }) => {
 
         
         {!isFavorited ? (
-          <button onClick={handleFavorite}>Add to Favorites</button>
+          <button class= "button" onClick={handleFavorite}>Add to Favorites</button>
         ) : (
           <button onClick={handleDeleteFavorite}>Delete from Favorites</button>
         )}

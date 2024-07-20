@@ -1,5 +1,8 @@
-$primary: steelblue;
-$body-bg: white;
+$primary: black;
+$body-bg: lightblue;
+$card-bg: white;
+
+
 
 @import '~bootstrap/scss/bootstrap.scss';
 
@@ -9,4 +12,38 @@ $body-bg: white;
   color: $primary;
   background: $body-bg;
   
+}
+
+.card {
+  background: $card-bg;
+  outline-color: $primary;
+}
+
+.movie-card-element {
+  padding: 20px;
+  background: white;
+  border: 5px solid black;
+}
+
+.navbar {
+  margin-bottom: 20px;
+  border: 3px solid black;
+}
+
+.button{
+  margin: 10px;
+}
+
+.back-button{
+  margin: 10px;
+}
+
+.formstyling{
+  background-color: $card-bg;
+  
+  
+}
+
+.btn-submit{
+  margin: 5px;
 }
