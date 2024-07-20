@@ -36548,17 +36548,27 @@ var _s = $RefreshSig$();
 const MovieView = ({ movies })=>{
     _s();
     const user = JSON.parse(localStorage.getItem("user"));
-    const token = JSON.stringify(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
+    // const token = JSON.stringify(localStorage.getItem('token')); 
     const { movieId } = (0, _reactRouter.useParams)();
     console.log("movieId", movieId);
     const movie = movies.find((mov)=>mov._id === movieId);
-    const favMovies = (movies || []).filter((m)=>(user.FavoriteMovies || []).includes(m._id));
+    const favMovies = (movies || []).filter((m)=>user && user.FavoriteMovies && user.FavoriteMovies.includes(m._id));
     const [isFavorited, setIsFavorited] = (0, _react.useState)(false);
     const [addMovieTitle, setAddMovieTitle] = (0, _react.useState)("");
     const [removeMovieTitle, setRemoveMovieTitle] = (0, _react.useState)("");
+    (0, _react.useEffect)(()=>{
+        if (user && user.FavoriteMovies && movie) {
+            const isMovieFavorited = favMovies.some((m)=>m._id === movie._id);
+            setIsFavorited(isMovieFavorited);
+        //isFavorite = true;
+        } else setIsFavorited(false);
+    }, [
+        user,
+        movie,
+        favMovies
+    ]);
     const favorite = async ()=>{
-        setIsFavorited(false);
-        isFavorite = false;
         fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/${movieId}`, {
             method: "POST",
             body: JSON.stringify(movie),
@@ -36569,27 +36579,25 @@ const MovieView = ({ movies })=>{
         }).then((response)=>response.json()).then((response)=>{
             const updated = {
                 ...user,
-                favMovies: response.favMovies
+                FavoriteMovies: response.FavoriteMovies
             };
             localStorage.setItem("user", JSON.stringify(updated));
             setIsFavorited(true);
-            isFavorite = true;
+            //isFavorite= true;
             alert("Movie added");
             window.location.reload();
         }).catch((error)=>{
             console.error("Error:", error);
             alert("Failed to add movie" + error.message);
         });
-        setIsFavorited(true);
-        isFavorite = true;
     };
     const handleFavorite = (e)=>{
         e.preventDefault();
         setAddMovieTitle(movie.Title);
     };
     const deleteFavorite = async ()=>{
-        setIsFavorited(true);
-        isFavorite = true;
+        //setIsFavorited(true);
+        //isFavorite = true;
         fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
             method: "DELETE",
             body: JSON.stringify(movie),
@@ -36611,26 +36619,12 @@ const MovieView = ({ movies })=>{
             console.error("Error:", error);
             alert("Failed to delete movie");
         });
-        setIsFavorited(false);
-        isFavorite = false;
     };
     const handleDeleteFavorite = (e)=>{
         e.preventDefault();
         setRemoveMovieTitle(movie.Title);
     };
-    (0, _react.useEffect)(()=>{
-        if (user && movie) {
-            setIsFavorited(user.favMovies.includes(movie._id));
-            isFavorite = true;
-        } else {
-            setIsFavorited(false);
-            isFavorite = false;
-        }
-    }, [
-        user,
-        movie,
-        user
-    ]);
+    console.log(user);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _rowDefault.default), {
         className: "justify-content-md-center",
         children: [
@@ -36781,21 +36775,20 @@ const MovieView = ({ movies })=>{
                         lineNumber: 139,
                         columnNumber: 9
                     }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    !isFavorited ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         onClick: handleFavorite,
                         children: "Add to Favorites"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 144,
-                        columnNumber: 9
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        lineNumber: 145,
+                        columnNumber: 11
+                    }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         onClick: handleDeleteFavorite,
                         children: "Delete from Favorites"
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 148,
-                        columnNumber: 9
+                        lineNumber: 147,
+                        columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {

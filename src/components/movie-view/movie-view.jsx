@@ -7,22 +7,30 @@ import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
   const user = JSON.parse(localStorage.getItem('user')); 
-  const token = JSON.stringify(localStorage.getItem('token')); 
+  const token = localStorage.getItem('token');
+ // const token = JSON.stringify(localStorage.getItem('token')); 
   const { movieId } = useParams();
   console.log("movieId", movieId)
   const movie = movies.find((mov) => mov._id === movieId);
-  const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id));
+  const favMovies = (movies || []).filter(m => user && user.FavoriteMovies && user.FavoriteMovies.includes(m._id));
   const [isFavorited, setIsFavorited] = useState(false);
   const [addMovieTitle, setAddMovieTitle] = useState('');
   const [removeMovieTitle, setRemoveMovieTitle] = useState('');
 
-  
+  useEffect(() => {
+    if (user && user.FavoriteMovies && movie) {
+      const isMovieFavorited = favMovies.some(m => m._id === movie._id);
+      setIsFavorited(isMovieFavorited);
+      //isFavorite = true;
+    } else {
+      setIsFavorited(false);
+    }
+  }, [user, movie, favMovies]);
   
 
 
   const favorite = async () => {
-    setIsFavorited(false);
-    isFavorite= false;
+
     fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/${movieId}`, {
       method: "POST",
       body: JSON.stringify(movie),
@@ -34,10 +42,10 @@ export const MovieView = ({ movies }) => {
     })
     .then((response) => response.json())
     .then((response) => {
-      const updated = { ...user, favMovies: response.favMovies }; 
+      const updated = { ...user, FavoriteMovies: response.FavoriteMovies }; 
       localStorage.setItem("user", JSON.stringify(updated));
       setIsFavorited(true);
-      isFavorite= true;
+      //isFavorite= true;
       alert("Movie added");
       window.location.reload();
     })
@@ -46,8 +54,7 @@ export const MovieView = ({ movies }) => {
       alert("Failed to add movie" + error.message);
     });
 
-    setIsFavorited(true);
-    isFavorite = true;
+
     
   };
 
@@ -59,8 +66,8 @@ export const MovieView = ({ movies }) => {
 
   
   const deleteFavorite = async () => {
-    setIsFavorited(true);
-    isFavorite = true;
+    //setIsFavorited(true);
+    //isFavorite = true;
 
     fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
       method: "DELETE",
@@ -84,8 +91,7 @@ export const MovieView = ({ movies }) => {
       alert("Failed to delete movie");
     });
 
-    setIsFavorited(false);
-    isFavorite = false;
+
   };
 
   const handleDeleteFavorite = (e) => {
@@ -93,15 +99,9 @@ export const MovieView = ({ movies }) => {
     setRemoveMovieTitle(movie.Title);
   }
 
-  useEffect(() => {
-    if (user && movie) {
-      setIsFavorited(user.favMovies.includes(movie._id));
-      isFavorite = true;
-    } else {
-      setIsFavorited(false);
-      isFavorite = false;
-    }
-  }, [user, movie, user]);
+  console.log(user)
+
+
   
   
 
@@ -141,11 +141,11 @@ export const MovieView = ({ movies }) => {
         </Link>
 
         
-        <button onClick= {handleFavorite}>Add to Favorites</button>
-        
-
-        
-        <button onClick= {handleDeleteFavorite}>Delete from Favorites</button>
+        {!isFavorited ? (
+          <button onClick={handleFavorite}>Add to Favorites</button>
+        ) : (
+          <button onClick={handleDeleteFavorite}>Delete from Favorites</button>
+        )}
         
 
         </Col>
