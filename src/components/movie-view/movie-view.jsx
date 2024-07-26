@@ -8,12 +8,12 @@ import { Link } from "react-router-dom";
 export const MovieView = ({ movies }) => {
   const user = JSON.parse(localStorage.getItem('user')); 
   const token = localStorage.getItem('token');
- // const token = JSON.stringify(localStorage.getItem('token')); 
+ 
   const { movieId } = useParams();
-  console.log("movieId", movieId)
+  
   const movie = movies.find((mov) => mov._id === movieId);
   const favMovies = (movies || []).filter(m => user && user.FavoriteMovies && user.FavoriteMovies.includes(m._id));
-  const [isFavorited, setIsFavorited] = useState(false);
+  const [isFavorited, setIsFavorited] = useState('');
   const [addMovieTitle, setAddMovieTitle] = useState('');
   const [removeMovieTitle, setRemoveMovieTitle] = useState('');
 
@@ -26,12 +26,17 @@ export const MovieView = ({ movies }) => {
       setIsFavorited(false);
     }
   }, [user, movie, favMovies]);
+
+  const updateFavoritesInLocalStorage = (updatedFavorites) => {
+    const updatedUser = { ...user, FavoriteMovies: updatedFavorites };
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+  };
   
 
 
   const favorite = async () => {
     try {
-      const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+      const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/${movieId}`, {
         method: "POST",
         body: JSON.stringify(movie),
         headers: {
@@ -59,32 +64,22 @@ export const MovieView = ({ movies }) => {
 
   
   const deleteFavorite = async () => {
-    //setIsFavorited(true);
-    //isFavorite = true;
-
-    fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
-      method: "DELETE",
-      body: JSON.stringify(movie),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      }
-    })
-    .then((response) => response.json())
-    .then((res) => {
-      const updated = { ...user, favoriteMovies: user.favoriteMovies.filter((m) => m !== movie._id) }; 
-      localStorage.setItem("user", JSON.stringify(updated));
+    try {
+      const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movie._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      const data = await response.json();
+      updateFavoritesInLocalStorage(data.FavoriteMovies);
       setIsFavorited(false);
-      isFavorite = false;
-      alert("Movie deleted");
-      
-    })
-    .catch((error) => {
+      alert("Movie removed from favorites");
+    } catch (error) {
       console.error("Error:", error);
-      alert("Failed to delete movie");
-    });
-
-
+      alert("Failed to remove movie: " + error.message);
+    }
   };
 
   const handleDeleteFavorite = (e) => {
@@ -131,7 +126,7 @@ export const MovieView = ({ movies }) => {
         </div>
 
         <Link to={`/`}>
-        <button className="back-button">Back</button>
+        <button className="button">Back</button>
         </Link>
 
         

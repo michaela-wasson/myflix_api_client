@@ -11,6 +11,9 @@ export const ProfileEdit = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState(user.Email || "");
     const [birthday, setBirthday] = useState(user.Birthday || "");
+
+    const date = new Date(user.Birthday);
+    let formattedDate = moment(date).format('MMMM Do YYYY');
     
 
     useEffect(() => {
@@ -78,15 +81,18 @@ export const ProfileEdit = () => {
     };
 
     return (
-        <div>
+        <div id= "formstyling">
             <h2>User Profile</h2>
             <ListGroup>
                 <ListGroup.Item>Username: {username}</ListGroup.Item>
                 <ListGroup.Item>Email: {email}</ListGroup.Item> 
-                <ListGroup.Item type="date">Birthday: {birthday}</ListGroup.Item>
+                <ListGroup.Item >Birthday: {formattedDate}</ListGroup.Item>
             </ListGroup>
 
-            <h2>Edit Profile</h2>
+            <div class= "editprofile">
+                <h2>Edit Profile</h2>
+
+            
 
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="formUsername">
@@ -129,10 +135,11 @@ export const ProfileEdit = () => {
                     />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button className = "btn-submit" variant="primary" type="submit">
                     Update Profile
                 </Button>
             </Form>
+            </div>
         </div>
     );
 };

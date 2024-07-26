@@ -1,5 +1,5 @@
 $primary: black;
-$body-bg: lightblue;
+$body-bg: #F5DEB3;
 $card-bg: white;
 
 
@@ -16,34 +16,49 @@ $card-bg: white;
 
 .card {
   background: $card-bg;
-  outline-color: $primary;
+  border: 3px solid #80461B;
 }
 
 .movie-card-element {
   padding: 20px;
   background: white;
-  border: 5px solid black;
+  border: 5px solid #80461B;
 }
 
 .navbar {
   margin-bottom: 20px;
-  border: 3px solid black;
+  border: 3px solid #80461B;
 }
 
 .button{
   margin: 10px;
+  background-color: black;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.button:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 .back-button{
   margin: 10px;
 }
 
-.formstyling{
+#formstyling{
   background-color: $card-bg;
-  
+  border: 3px solid #80461B;
+  padding: 12px;
   
 }
 
 .btn-submit{
   margin: 5px;
+}
+
+.editprofile{
+  margin-top: 10px;
+  
 }

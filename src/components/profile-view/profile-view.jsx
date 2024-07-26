@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button, Card, Form, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
@@ -8,11 +8,50 @@ import moment from 'moment';
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
-    const token = JSON.stringify(localStorage.getItem('token')); 
+    const token = localStorage.getItem('token');
+    const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
+
     const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
-    console.log(user.Username)
+
     const date = new Date(user.Birthday);
     let formattedDate = moment(date).format('MMMM Do YYYY');
+
+    useEffect(() => {
+
+        
+      const fetchUserData = async () => {
+          try {
+              const response = await fetch('https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}', {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                  }
+              });
+              if (!response.ok) {
+                  alert('Failed to fetch user data');
+              }
+              const userData = await response.json();
+              setUsername(userData.Username);
+              setEmail(userData.Email);
+              setBirthday(userData.Birthday);
+              setFavMovies(userData.FavoriteMovies);
+              
+              
+              
+          } catch (err) {
+              alert(err)
+          } 
+      };
+
+     fetchUserData();
+  }, [token, user.Username]);
+
+  console.log(favoriteMovies)
+
+
+
+    
 
     
 
@@ -35,7 +74,7 @@ export const ProfileView = ( { movies} )=> {
               alert("Try again");
             }
           }); 
-          deleteProfile();
+          
           };
 
          
@@ -45,9 +84,9 @@ export const ProfileView = ( { movies} )=> {
     return ( 
 
   
-        <Form>
+        <Form id= "formstyling">
 
-        
+        <h2>Your Profile:</h2>
 
             <ListGroup>
                 <ListGroup.Item>Your Username: {user.Username}</ListGroup.Item>
