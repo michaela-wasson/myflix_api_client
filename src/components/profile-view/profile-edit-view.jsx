@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, ListGroup } from "react-bootstrap";
+import moment from 'moment';
 
 
 export const ProfileEdit = () => {
@@ -82,7 +83,7 @@ export const ProfileEdit = () => {
             <ListGroup>
                 <ListGroup.Item>Username: {username}</ListGroup.Item>
                 <ListGroup.Item>Email: {email}</ListGroup.Item> 
-                <ListGroup.Item>Birthday: {birthday}</ListGroup.Item>
+                <ListGroup.Item type="date">Birthday: {birthday}</ListGroup.Item>
             </ListGroup>
 
             <h2>Edit Profile</h2>

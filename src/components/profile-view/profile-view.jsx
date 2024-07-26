@@ -3,12 +3,18 @@ import { Button, Card, Form, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MovieCard } from "../movie-card/movie-card";
 import {ProfileEdit} from "./profile-edit-view";
+import moment from 'moment';
 
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
     const token = JSON.stringify(localStorage.getItem('token')); 
     const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
+    console.log(user.Username)
+    const date = new Date(user.Birthday);
+    let formattedDate = moment(date).format('MMMM Do YYYY');
+
+    
 
     const deleteProfile = async (user) => {
         await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
@@ -37,6 +43,8 @@ export const ProfileView = ( { movies} )=> {
    
 
     return ( 
+
+  
         <Form>
 
         
@@ -44,7 +52,8 @@ export const ProfileView = ( { movies} )=> {
             <ListGroup>
                 <ListGroup.Item>Your Username: {user.Username}</ListGroup.Item>
                 <ListGroup.Item>Your Email: {user.Email}</ListGroup.Item>
-                <ListGroup.Item>Your Birthday: {user.Birthday}</ListGroup.Item>
+                <ListGroup.Item>
+                  Your Birthday: {formattedDate}</ListGroup.Item>
                 <ListGroup.Item>
                     <strong> Your Favorites!</strong>
                     {favMovies.length > 0 ? (

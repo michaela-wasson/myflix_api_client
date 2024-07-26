@@ -30,37 +30,30 @@ export const MovieView = ({ movies }) => {
 
 
   const favorite = async () => {
-
-    fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/${movieId}`, {
-      method: "POST",
-      body: JSON.stringify(movie),
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-    
-      },
-    })
-    .then((response) => response.json())
-    .then((response) => {
-      const updated = { ...user, FavoriteMovies: response.FavoriteMovies }; 
+    try {
+      const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}/movies/${movieId}`, {
+        method: "POST",
+        body: JSON.stringify(movie),
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      const updated = { ...user, FavoriteMovies: data.FavoriteMovies }; 
       localStorage.setItem("user", JSON.stringify(updated));
       setIsFavorited(true);
-      //isFavorite= true;
       alert("Movie added");
-      window.location.reload();
-    })
-    .catch((error) => {
+    } catch (error) {
       console.error("Error:", error);
-      alert("Failed to add movie" + error.message);
-    });
-
-
-    
+      alert("Failed to add movie: " + error.message);
+    }
   };
 
   const handleFavorite = (e) => {
     e.preventDefault();
     setAddMovieTitle(movie.Title);
+    favorite();
   }
   
 
@@ -84,7 +77,7 @@ export const MovieView = ({ movies }) => {
       setIsFavorited(false);
       isFavorite = false;
       alert("Movie deleted");
-      window.location.reload()
+      
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -97,6 +90,7 @@ export const MovieView = ({ movies }) => {
   const handleDeleteFavorite = (e) => {
     e.preventDefault();
     setRemoveMovieTitle(movie.Title);
+    deleteFavorite();
   }
 
   console.log(user)
@@ -115,23 +109,23 @@ export const MovieView = ({ movies }) => {
         </Col>
         
         <Col>
-        <div class = "movie-card-element">
+        <div className = "movie-card-element">
           <span><strong>Title:</strong> </span>
           <span>{movie.Title}</span>
         </div>
-        <div class = "movie-card-element">
+        <div className = "movie-card-element">
           <span><strong>Description:</strong> </span>
           <span>{movie.Description}</span>
         </div>
-        <div class = "movie-card-element">
+        <div className = "movie-card-element">
         <span><strong>Genre:</strong> </span>
           <span>{movie.Genre.Name}</span>
         </div>
-        <div class = "movie-card-element">
+        <div className= "movie-card-element">
           <span><strong>Genre Described: </strong></span>
           <span>{movie.Genre.Description}</span>
         </div>
-        <div class = "movie-card-element">
+        <div className = "movie-card-element">
           <span><strong>Director:</strong> </span>
           <span>{movie.Director.Bio}</span>
         </div>
@@ -142,7 +136,7 @@ export const MovieView = ({ movies }) => {
 
         
         {!isFavorited ? (
-          <button class= "button" onClick={handleFavorite}>Add to Favorites</button>
+          <button className= "button" onClick={handleFavorite}>Add to Favorites</button>
         ) : (
           <button onClick={handleDeleteFavorite}>Delete from Favorites</button>
         )}

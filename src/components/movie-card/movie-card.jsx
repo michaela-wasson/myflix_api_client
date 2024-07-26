@@ -3,9 +3,12 @@ import {Button, Card} from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
 import {Link} from "react-router-dom";
 
+
 //import "./movie-card.scss"
 
 export const MovieCard = ({ movie }) => {
+
+
     const directorName = movie.Director ? movie.Director.Name : "no name"; 
     return (
       <Card className= "h-100">

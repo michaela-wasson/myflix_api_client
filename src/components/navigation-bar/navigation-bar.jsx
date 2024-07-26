@@ -1,7 +1,8 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Form from "react-bootstrap/Form";
 
-export const NavBar = ({ user, onLoggedOut }) => {
+export const NavBar = ({ user, onLoggedOut, emptySearch, handleInputChange, searchItem }) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -19,7 +20,16 @@ export const NavBar = ({ user, onLoggedOut }) => {
                 <Nav.Item>
                     <Nav.Link onClick={onLoggedOut} >Logout</Nav.Link> 
                 </Nav.Item>
-                
+                <Form className="me-auto">
+                  <Form.Group controlId="searchBar">
+                    <Form.Control
+                      type="text"
+                      value={searchItem}
+                      onChange={handleInputChange}
+                      placeholder="Search by title"
+                    />
+                  </Form.Group>
+                </Form>  
                  
             </>
           ) : (

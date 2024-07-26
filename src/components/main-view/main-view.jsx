@@ -11,6 +11,8 @@ import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 //import { RouteContext } from "react-router/lib/context";
 
+//password: ebereebere
+
 export const MainView = () => {
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -21,6 +23,28 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);   
 
+  const [searchItem, setSearchItem] = useState("");
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  
+  const handleInputChange = (e) => {
+    const searchTerm = e.target.value;
+    setSearchItem(searchTerm);
+  };
+
+  const emptySearch = () => {
+    setSearchItem("");
+  };
+
+  useEffect(() => {
+    if (searchItem === "") {
+      setFilteredMovies(movies);
+    } else {
+      const filteredList = movies.filter((movie) => {
+        return movie.Title.toLowerCase().includes(searchItem.toLowerCase());
+      });
+      setFilteredMovies(filteredList);
+    }
+  }, [searchItem, movies]);
   
 
 
@@ -71,7 +95,11 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-    <NavBar user={storedUser} onLoggedOut={() => { setUser(null); setToken(null); localStorage.clear(); }} />
+    <NavBar user={storedUser} onLoggedOut={() => { setUser(null); setToken(null); localStorage.clear(); }} 
+      emptySearch={emptySearch}
+      handleInputChange={handleInputChange}
+      searchItem={searchItem}
+      />
     <Row className="justify-content-md-center">
       <Routes>
         <Route
@@ -166,7 +194,7 @@ export const MainView = () => {
               <Col> There are no movies!</Col>
             ) : (
               <>
-                {movies.map ((movie) => (
+                {filteredMovies.map ((movie) => (
                   <Col className= "mb-4" 
                   key= {movie._id} 
                   md={3}> 
