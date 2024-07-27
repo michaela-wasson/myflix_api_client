@@ -37567,15 +37567,18 @@ const ProfileEdit = ()=>{
     const token = localStorage.getItem("token");
     const [error, setError] = (0, _react.useState)(null);
     const [username, setUsername] = (0, _react.useState)(user.Username || "");
+    console.log("username", username);
     const [password, setPassword] = (0, _react.useState)("");
     const [email, setEmail] = (0, _react.useState)(user.Email || "");
+    console.log("email", email);
     const [birthday, setBirthday] = (0, _react.useState)(user.Birthday || "");
+    console.log("birthday", birthday);
     const date = new Date(user.Birthday);
     let formattedDate = (0, _momentDefault.default)(date).format("MMMM Do YYYY");
     (0, _react.useEffect)(()=>{
         const fetchUserData = async ()=>{
             try {
-                const response = await fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}", {
+                const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -37596,17 +37599,16 @@ const ProfileEdit = ()=>{
         token,
         user.Username
     ]);
-    console.log(user);
     const handleSubmit = async (event)=>{
         event.preventDefault();
         const updatedUser = {
             Username: username,
             Email: email,
-            Birthday: birthday,
-            Password: password
+            Birthday: birthday
         };
+        console.log("updated user", updatedUser);
         try {
-            const response = await fetch("https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}", {
+            const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -37615,11 +37617,17 @@ const ProfileEdit = ()=>{
                 body: JSON.stringify(updatedUser)
             });
             if (!response.ok) throw new Error("Failed to update user data");
+            console.log("res", response);
             alert("User information updated successfully!");
-            window.location.reload();
+        //window.location.reload(); 
         } catch (err) {
             alert(err.message);
         }
+        setUsername(updatedUser.Username);
+        console.log(updatedUser.Username);
+        setEmail(updatedUser.Email);
+        setBirthday(updatedUser.Birthday);
+        console.log(updatedUser.Birthday);
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         id: "formstyling",
@@ -37628,7 +37636,7 @@ const ProfileEdit = ()=>{
                 children: "User Profile"
             }, void 0, false, {
                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                lineNumber: 85,
+                lineNumber: 104,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup), {
@@ -37640,7 +37648,7 @@ const ProfileEdit = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                        lineNumber: 87,
+                        lineNumber: 106,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
@@ -37650,23 +37658,23 @@ const ProfileEdit = ()=>{
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                        lineNumber: 88,
+                        lineNumber: 107,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
                         children: [
                             "Birthday: ",
-                            formattedDate
+                            birthday
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                        lineNumber: 89,
+                        lineNumber: 108,
                         columnNumber: 17
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                lineNumber: 86,
+                lineNumber: 105,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -37676,7 +37684,7 @@ const ProfileEdit = ()=>{
                         children: "Edit Profile"
                     }, void 0, false, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                        lineNumber: 93,
+                        lineNumber: 112,
                         columnNumber: 17
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form), {
@@ -37689,7 +37697,7 @@ const ProfileEdit = ()=>{
                                         children: "Username"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 99,
+                                        lineNumber: 118,
                                         columnNumber: 21
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -37699,13 +37707,13 @@ const ProfileEdit = ()=>{
                                         onChange: (e)=>setUsername(e.target.value)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 100,
+                                        lineNumber: 119,
                                         columnNumber: 21
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                lineNumber: 98,
+                                lineNumber: 117,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -37715,7 +37723,7 @@ const ProfileEdit = ()=>{
                                         children: "Email"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 109,
+                                        lineNumber: 128,
                                         columnNumber: 21
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -37725,13 +37733,13 @@ const ProfileEdit = ()=>{
                                         onChange: (e)=>setEmail(e.target.value)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 110,
+                                        lineNumber: 129,
                                         columnNumber: 21
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                lineNumber: 108,
+                                lineNumber: 127,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -37741,7 +37749,7 @@ const ProfileEdit = ()=>{
                                         children: "Password"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 119,
+                                        lineNumber: 138,
                                         columnNumber: 21
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -37751,13 +37759,13 @@ const ProfileEdit = ()=>{
                                         onChange: (e)=>setPassword(e.target.value)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 120,
+                                        lineNumber: 139,
                                         columnNumber: 21
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                lineNumber: 118,
+                                lineNumber: 137,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -37767,7 +37775,7 @@ const ProfileEdit = ()=>{
                                         children: "Birthday"
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 129,
+                                        lineNumber: 148,
                                         columnNumber: 21
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control, {
@@ -37776,13 +37784,13 @@ const ProfileEdit = ()=>{
                                         onChange: (e)=>setBirthday(e.target.value)
                                     }, void 0, false, {
                                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                        lineNumber: 130,
+                                        lineNumber: 149,
                                         columnNumber: 21
                                     }, undefined)
                                 ]
                             }, void 0, true, {
                                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                lineNumber: 128,
+                                lineNumber: 147,
                                 columnNumber: 17
                             }, undefined),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Button), {
@@ -37792,25 +37800,25 @@ const ProfileEdit = ()=>{
                                 children: "Update Profile"
                             }, void 0, false, {
                                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                                lineNumber: 138,
+                                lineNumber: 157,
                                 columnNumber: 17
                             }, undefined)
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
-                        lineNumber: 97,
+                        lineNumber: 116,
                         columnNumber: 13
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/profile-view/profile-edit-view.jsx",
-                lineNumber: 92,
+                lineNumber: 111,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/profile-view/profile-edit-view.jsx",
-        lineNumber: 84,
+        lineNumber: 103,
         columnNumber: 9
     }, undefined);
 };
