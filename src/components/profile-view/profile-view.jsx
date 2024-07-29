@@ -8,6 +8,10 @@ import moment from 'moment';
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [birthday, setBirthday] = useState('');
     const token = localStorage.getItem('token');
     const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
 
@@ -21,11 +25,13 @@ export const ProfileView = ( { movies} )=> {
         
       const fetchUserData = async () => {
           try {
-              const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
+              const userInfo = JSON.parse(localStorage.getItem('user'));
+              
+              const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${userInfo.Username}`, {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                      'Authorization': `Bearer ${token}` 
                   }
               });
               if (!response.ok) {
@@ -35,7 +41,7 @@ export const ProfileView = ( { movies} )=> {
               setUsername(userData.Username);
               setEmail(userData.Email);
               setBirthday(userData.Birthday);
-              setFavMovies(userData.FavoriteMovies);
+              setFavoriteMovies(userData.FavoriteMovies);
               
               
               
@@ -45,9 +51,9 @@ export const ProfileView = ( { movies} )=> {
       };
 
      fetchUserData();
-  }, [token, user.Username]);
+  }, [token]);
 
-  console.log(favoriteMovies)
+  
 
 
 

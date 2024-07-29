@@ -28,7 +28,7 @@ export const ProfileEdit = () => {
             Username: username,
             Email: email,
             Birthday: birthday,
-            // Password is not included in this update; include it if needed.
+            
         };
 
         console.log("updated user", updatedUser);
@@ -50,7 +50,10 @@ export const ProfileEdit = () => {
             setUsername(updatedUser.Username);
             setEmail(updatedUser.Email);
             setBirthday(updatedUser.Birthday);
-            
+
+            const updateLocalStorage = (updatedUser) => {
+        localStorage.setItem('user', JSON.stringify(updatedUser));
+    };
 
             alert('User information updated successfully!');
 
@@ -59,6 +62,8 @@ export const ProfileEdit = () => {
             alert(err.message);
         }
     };
+
+
 
 
 
