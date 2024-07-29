@@ -21,7 +21,7 @@ export const ProfileView = ( { movies} )=> {
         
       const fetchUserData = async () => {
           try {
-              const response = await fetch('https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}', {
+              const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
                   method: 'GET',
                   headers: {
                       'Content-Type': 'application/json',
