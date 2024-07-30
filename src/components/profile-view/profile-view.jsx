@@ -8,50 +8,50 @@ import moment from 'moment';
 
 export const ProfileView = ( { movies} )=> {
     const user = JSON.parse(localStorage.getItem('user')); 
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [birthday, setBirthday] = useState('');
+    // const [username, setUsername] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [birthday, setBirthday] = useState('');
     const token = localStorage.getItem('token');
-    const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
+    //const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
 
     const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
 
-    const date = new Date(user.Birthday);
-    let formattedDate = moment(date).format('MMMM Do YYYY');
+    // const date = new Date(user.Birthday);
+    // let formattedDate = moment(date).format('MMMM Do YYYY');
 
-    useEffect(() => {
+  //   useEffect(() => {
 
         
-      const fetchUserData = async () => {
-          try {
-              const userInfo = JSON.parse(localStorage.getItem('user'));
+  //     const fetchUserData = async () => {
+  //         try {
+  //             const userInfo = JSON.parse(localStorage.getItem('user'));
               
-              const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${userInfo.Username}`, {
-                  method: 'GET',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': `Bearer ${token}` 
-                  }
-              });
-              if (!response.ok) {
-                  alert('Failed to fetch user data');
-              }
-              const userData = await response.json();
-              setUsername(userData.Username);
-              setEmail(userData.Email);
-              setBirthday(userData.Birthday);
-              setFavoriteMovies(userData.FavoriteMovies);
+  //             const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${userInfo.Username}`, {
+  //                 method: 'GET',
+  //                 headers: {
+  //                     'Content-Type': 'application/json',
+  //                     'Authorization': `Bearer ${token}` 
+  //                 }
+  //             });
+  //             if (!response.ok) {
+  //                 throw new Error ('Failed to fetch user data');
+  //             }
+  //             const userData = await response.json();
+  //             setUsername(userData.Username);
+  //             setEmail(userData.Email);
+  //             setBirthday(userData.Birthday);
+  //             setFavoriteMovies(userData.FavoriteMovies);
               
               
               
-          } catch (err) {
-              alert(err)
-          } 
-      };
+  //         } catch (err) {
+  //             alert(err.message)
+  //         } 
+  //     };
 
-     fetchUserData();
-  }, [token]);
+  //    fetchUserData();
+  // }, [token]);
 
   
 
@@ -98,7 +98,7 @@ export const ProfileView = ( { movies} )=> {
                 <ListGroup.Item>Your Username: {user.Username}</ListGroup.Item>
                 <ListGroup.Item>Your Email: {user.Email}</ListGroup.Item>
                 <ListGroup.Item>
-                  Your Birthday: {formattedDate}</ListGroup.Item>
+                  Your Birthday: {user.Birthday}</ListGroup.Item>
                 <ListGroup.Item>
                     <strong> Your Favorites!</strong>
                     {favMovies.length > 0 ? (

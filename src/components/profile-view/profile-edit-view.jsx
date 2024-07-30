@@ -67,7 +67,7 @@ export const ProfileEdit = () => {
 
 
 
-    //const formattedDate = moment(new Date(birthday)).format('YYYY-MM-DD');
+    //{moment(birthday).format('MMMM Do YYYY')}const formattedDate = moment(new Date(birthday)).format('YYYY-MM-DD');
 
     return (
         <div id="formstyling">
@@ -75,7 +75,7 @@ export const ProfileEdit = () => {
             <ListGroup>
                 <ListGroup.Item>Username: {username}</ListGroup.Item>
                 <ListGroup.Item>Email: {email}</ListGroup.Item>
-                <ListGroup.Item>Birthday: {moment(birthday).format('MMMM Do YYYY')}</ListGroup.Item>
+                <ListGroup.Item>Birthday: {birthday} </ListGroup.Item>
             </ListGroup>
 
             <div className="editprofile">

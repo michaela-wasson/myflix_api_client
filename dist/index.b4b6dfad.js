@@ -37352,44 +37352,42 @@ var _movieCard = require("../movie-card/movie-card");
 var _profileEditView = require("./profile-edit-view");
 var _moment = require("moment");
 var _momentDefault = parcelHelpers.interopDefault(_moment);
-var _s = $RefreshSig$();
 const ProfileView = ({ movies })=>{
-    _s();
     const user = JSON.parse(localStorage.getItem("user"));
-    const [username, setUsername] = (0, _react.useState)("");
-    const [email, setEmail] = (0, _react.useState)("");
-    const [password, setPassword] = (0, _react.useState)("");
-    const [birthday, setBirthday] = (0, _react.useState)("");
+    // const [username, setUsername] = useState('');
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [birthday, setBirthday] = useState('');
     const token = localStorage.getItem("token");
-    const [favoriteMovies, setFavoriteMovies] = (0, _react.useState)(user.FavoriteMovies || "");
+    //const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
     const favMovies = (movies || []).filter((m)=>(user.FavoriteMovies || []).includes(m._id));
-    const date = new Date(user.Birthday);
-    let formattedDate = (0, _momentDefault.default)(date).format("MMMM Do YYYY");
-    (0, _react.useEffect)(()=>{
-        const fetchUserData = async ()=>{
-            try {
-                const userInfo = JSON.parse(localStorage.getItem("user"));
-                const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${userInfo.Username}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    }
-                });
-                if (!response.ok) alert("Failed to fetch user data");
-                const userData = await response.json();
-                setUsername(userData.Username);
-                setEmail(userData.Email);
-                setBirthday(userData.Birthday);
-                setFavoriteMovies(userData.FavoriteMovies);
-            } catch (err) {
-                alert(err);
-            }
-        };
-        fetchUserData();
-    }, [
-        token
-    ]);
+    // const date = new Date(user.Birthday);
+    // let formattedDate = moment(date).format('MMMM Do YYYY');
+    //   useEffect(() => {
+    //     const fetchUserData = async () => {
+    //         try {
+    //             const userInfo = JSON.parse(localStorage.getItem('user'));
+    //             const response = await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${userInfo.Username}`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${token}` 
+    //                 }
+    //             });
+    //             if (!response.ok) {
+    //                 throw new Error ('Failed to fetch user data');
+    //             }
+    //             const userData = await response.json();
+    //             setUsername(userData.Username);
+    //             setEmail(userData.Email);
+    //             setBirthday(userData.Birthday);
+    //             setFavoriteMovies(userData.FavoriteMovies);
+    //         } catch (err) {
+    //             alert(err.message)
+    //         } 
+    //     };
+    //    fetchUserData();
+    // }, [token]);
     const deleteProfile = async (user)=>{
         await fetch(`https://movieapi2020-67bf919e3b74.herokuapp.com/users/${user.Username}`, {
             method: "DELETE",
@@ -37441,7 +37439,7 @@ const ProfileView = ({ movies })=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
                         children: [
                             "Your Birthday: ",
-                            formattedDate
+                            user.Birthday
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
@@ -37537,7 +37535,6 @@ const ProfileView = ({ movies })=>{
         columnNumber: 9
     }, undefined);
 };
-_s(ProfileView, "N83EaTlBOWlmzki6ET/tYSJDKjk=");
 _c = ProfileView;
 var _c;
 $RefreshReg$(_c, "ProfileView");
@@ -41366,7 +41363,7 @@ const ProfileEdit = ()=>{
             alert(err.message);
         }
     };
-    //const formattedDate = moment(new Date(birthday)).format('YYYY-MM-DD');
+    //{moment(birthday).format('MMMM Do YYYY')}const formattedDate = moment(new Date(birthday)).format('YYYY-MM-DD');
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         id: "formstyling",
         children: [
@@ -41402,7 +41399,8 @@ const ProfileEdit = ()=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
                         children: [
                             "Birthday: ",
-                            (0, _momentDefault.default)(birthday).format("MMMM Do YYYY")
+                            birthday,
+                            " "
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-edit-view.jsx",
