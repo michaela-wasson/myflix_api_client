@@ -76,7 +76,7 @@ export const ProfileEdit = () => {
             <ListGroup>
                 <ListGroup.Item>Username: {username}</ListGroup.Item>
                 <ListGroup.Item>Email: {email}</ListGroup.Item>
-                <ListGroup.Item>Birthday: {birthday} </ListGroup.Item>
+                <ListGroup.Item>Birthday: {moment(birthday).format('MMMM Do YYYY')} </ListGroup.Item>
             </ListGroup>
 
             <div className="editprofile">

@@ -17,8 +17,8 @@ export const ProfileView = ( { movies} )=> {
 
     const favMovies = (movies || []).filter(m => (user.FavoriteMovies || []).includes(m._id))
 
-    // const date = new Date(user.Birthday);
-    // let formattedDate = moment(date).format('MMMM Do YYYY');
+    const date = new Date(user.Birthday);
+    let formattedDate = moment(date).format('MMMM Do YYYY');
 
   //   useEffect(() => {
 
@@ -98,7 +98,7 @@ export const ProfileView = ( { movies} )=> {
                 <ListGroup.Item>Your Username: {user.Username}</ListGroup.Item>
                 <ListGroup.Item>Your Email: {user.Email}</ListGroup.Item>
                 <ListGroup.Item>
-                  Your Birthday: {user.Birthday}</ListGroup.Item>
+                  Your Birthday: {formattedDate}</ListGroup.Item>
                 <ListGroup.Item>
                     <strong> Your Favorites!</strong>
                     {favMovies.length > 0 ? (

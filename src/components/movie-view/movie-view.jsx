@@ -133,7 +133,7 @@ export const MovieView = ({ movies }) => {
         {!isFavorited ? (
           <button className= "button" onClick={handleFavorite}>Add to Favorites</button>
         ) : (
-          <button onClick={handleDeleteFavorite}>Delete from Favorites</button>
+          <button className= "button" onClick={handleDeleteFavorite}>Delete from Favorites</button>
         )}
         
 

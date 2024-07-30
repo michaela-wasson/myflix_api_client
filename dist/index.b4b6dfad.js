@@ -36855,6 +36855,7 @@ const MovieView = ({ movies })=>{
                         lineNumber: 134,
                         columnNumber: 11
                     }, undefined) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                        className: "button",
                         onClick: handleDeleteFavorite,
                         children: "Delete from Favorites"
                     }, void 0, false, {
@@ -37361,8 +37362,8 @@ const ProfileView = ({ movies })=>{
     const token = localStorage.getItem("token");
     //const [favoriteMovies, setFavoriteMovies] = useState(user.FavoriteMovies || "");
     const favMovies = (movies || []).filter((m)=>(user.FavoriteMovies || []).includes(m._id));
-    // const date = new Date(user.Birthday);
-    // let formattedDate = moment(date).format('MMMM Do YYYY');
+    const date = new Date(user.Birthday);
+    let formattedDate = (0, _momentDefault.default)(date).format("MMMM Do YYYY");
     //   useEffect(() => {
     //     const fetchUserData = async () => {
     //         try {
@@ -37439,7 +37440,7 @@ const ProfileView = ({ movies })=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
                         children: [
                             "Your Birthday: ",
-                            user.Birthday
+                            formattedDate
                         ]
                     }, void 0, true, {
                         fileName: "src/components/profile-view/profile-view.jsx",
@@ -41398,7 +41399,7 @@ const ProfileEdit = ()=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.ListGroup).Item, {
                         children: [
                             "Birthday: ",
-                            birthday,
+                            (0, _momentDefault.default)(birthday).format("MMMM Do YYYY"),
                             " "
                         ]
                     }, void 0, true, {
