@@ -47,13 +47,14 @@ export const ProfileEdit = () => {
             }
             console.log("res", response);
 
-            setUsername(updatedUser.Username);
-            setEmail(updatedUser.Email);
-            setBirthday(updatedUser.Birthday);
+            // setUsername(updatedUser.Username);
+            // setEmail(updatedUser.Email);
+            // setBirthday(updatedUser.Birthday);
+            setUser(updatedUser);
 
-            const updateLocalStorage = (updatedUser) => {
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-    };
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+
+
 
             alert('User information updated successfully!');
 
