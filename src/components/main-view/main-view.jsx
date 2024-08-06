@@ -9,9 +9,7 @@ import {NavBar} from "../navigation-bar/navigation-bar"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-//import { RouteContext } from "react-router/lib/context";
 
-//password: ebereebere
 
 export const MainView = () => {
 

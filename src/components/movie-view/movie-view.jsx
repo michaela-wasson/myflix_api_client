@@ -17,6 +17,8 @@ export const MovieView = ({ movies }) => {
   const [addMovieTitle, setAddMovieTitle] = useState('');
   const [removeMovieTitle, setRemoveMovieTitle] = useState('');
 
+  
+
   useEffect(() => {
     if (user && user.FavoriteMovies && movie) {
       const isMovieFavorited = favMovies.some(m => m._id === movie._id);
